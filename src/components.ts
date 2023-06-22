@@ -5,9 +5,11 @@ import {
   CardBody,
   CardHeader,
   CardFooter,
+  Input,
   Navbar,
   Spinner,
   ThemeProvider,
+  Chip,
   Typography,
 } from '@material-tailwind/react';
 
@@ -17,6 +19,8 @@ export {
   CardBody,
   CardHeader,
   CardFooter,
+  Chip,
+  Input,
   Navbar,
   Spinner,
   ThemeProvider,

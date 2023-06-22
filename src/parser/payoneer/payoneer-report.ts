@@ -33,25 +33,25 @@ export class PayoneerReport {
     return this.names;
   }
 
-  getItems(currency: string = 'USD', range: DateRange = this.range): PayoneerReportItem[] {
+  getItems(currency: string | null = 'USD', range: DateRange = this.range): PayoneerReportItem[] {
     return this.items
       .filter(i => !currency || i.currency === currency);
   }
 
 
-  getIncomeItems(currency: string = 'USD', range: DateRange = this.range) {
+  getIncomeItems(currency: string | null = 'USD', range: DateRange = this.range) {
     return this.getItems(currency, range)
       .filter(i => i.amount >= 0)
       .filter(i => i.date >= range.from && i.date <= range.until);
   }
 
-  getSpentItems(currency: string = 'USD', range: DateRange = this.range) {
+  getSpentItems(currency: string | null = 'USD', range: DateRange = this.range) {
     return this.getItems(currency, range)
       .filter(i => i.amount < 0)
       .filter(i => i.date >= range.from && i.date <= range.until);
   }
 
-  getStats(currency: string = 'USD', range: DateRange = this.range): ReportStats {
+  getStats(currency: string | null = 'USD', range: DateRange = this.range): ReportStats {
     const spentItems = this.getSpentItems(currency, range).map(i => i.amount);
     const incomeItems = this.getIncomeItems(currency, range).map(i => i.amount);
 

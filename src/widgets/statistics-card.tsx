@@ -42,7 +42,7 @@ export function StatisticsCard({ report }: StatisticsProps) {
   ];
 
   return (
-    <div className='mt-20 mb-6'>
+    <div className='mt-12'>
       <Typography varient='h2' className='text-2xl font-bold' color='blue-gray'>Statistics</Typography>
       <div className='grid xl:grid-cols-5 gap-4'>
         {cardStats.map(({ title, value }, index) => (

@@ -1,9 +1,14 @@
 'use client';
 import { Card, CardBody, CardFooter, CardHeader, Typography } from '@/components';
-import Chart from 'react-apexcharts';
 import { chartsConfig } from '@/configs';
 import { format } from 'date-fns';
 import { PayoneerReport } from '@/parser/payoneer/payoneer-report';
+import dynamic from 'next/dynamic';
+
+const Chart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+});
+
 
 export interface StatisticsChartProps {
   report: PayoneerReport;
@@ -43,9 +48,9 @@ export function StatisticsChart({ report }: StatisticsChartProps) {
   }));
 
   return (
-    <div className='mt-20 mb-6'>
-      <Typography varient='h2' className='text-2xl font-bold mb-6' color='blue-gray'>Statistics Charts</Typography>
-      <div className='flex flex-row mb-10 mt-12 gap-3'>
+    <div className='mt-12'>
+      <Typography varient='h2' className='text-2xl font-bold' color='blue-gray'>Statistics Charts</Typography>
+      <div className='grid xl:grid-cols-2 gap-4 mb-10 mt-12'>
         {charts.length && charts.map((chart, index) => (
           <Card key={index}>
             <CardHeader variant='gradient' color={color}>

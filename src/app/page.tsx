@@ -1,7 +1,6 @@
 'use client';
-import { Card, CardBody, Navbar, Typography } from '@/components';
 import { useState } from 'react';
-import { StatisticsCard, Uploader } from '@/widgets';
+import { StatisticsCard, StatisticsChart, Uploader } from '@/widgets';
 import { PayoneerParser, PayoneerReport } from '@/parser/payoneer';
 import { TransactionList } from '@/widgets/transaction-list';
 
@@ -18,7 +17,7 @@ export default function Dashboard() {
     <div>
       <Uploader id='reportFile' accept='.csv' onFileLoad={onFileLoad} />
       {report && <StatisticsCard report={report} />}
-      {/*{report && <StatisticsChart report={report} />}*/}
+      {report && <StatisticsChart report={report} />}
       {report && <TransactionList report={report} />}
     </div>
   );
