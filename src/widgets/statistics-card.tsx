@@ -1,15 +1,18 @@
 'use client';
-import { Card, CardBody, Typography } from '@/components';
+import { Card, CardBody, Typography } from '@/ui-kit';
 import { PayoneerReport } from '@/parser/payoneer';
-import { BanknotesIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
+import { CurrencySelector } from '@/widgets';
 
 export interface StatisticsProps {
   report: PayoneerReport;
 }
 
 export function StatisticsCard({ report }: StatisticsProps) {
-  const [stats, setStats] = useState(report.getStats());
+  const currencies = report.getCurrencies();
+  console.log(currencies);
+  const [currency, setCurrency] = useState(currencies[0]);
+  const [stats, setStats] = useState(report.getStats(currency));
   const {
     income,
     spent,
@@ -41,9 +44,17 @@ export function StatisticsCard({ report }: StatisticsProps) {
     },
   ];
 
+  const onCurrencyChange = (value: string) => {
+    setCurrency(value);
+    setStats(report.getStats(value));
+  };
+
+  console.log(currency);
+
   return (
     <div className='mt-12'>
       <Typography varient='h2' className='text-2xl font-bold' color='blue-gray'>Statistics</Typography>
+      <CurrencySelector id='stats_currency_filter' value={currency} items={currencies} onChange={onCurrencyChange} />
       <div className='grid xl:grid-cols-5 gap-4'>
         {cardStats.map(({ title, value }, index) => (
           <Card key={index} className='mt-6'>

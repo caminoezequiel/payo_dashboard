@@ -1,6 +1,6 @@
 import { LegacyRef, useRef } from 'react';
 import { ArrowUpTrayIcon } from '@heroicons/react/24/solid';
-import { Button } from '@/components';
+import { Button } from '@/ui-kit';
 
 export function InputFile(props: any) {
   const { label, ...inputProps } = props;

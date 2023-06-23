@@ -1,14 +1,13 @@
 'use client';
-import { Card, CardBody, CardFooter, CardHeader, Typography } from '@/components';
+import { Card, CardBody, CardFooter, CardHeader, Typography } from '@/ui-kit';
 import { chartsConfig } from '@/configs';
 import { format } from 'date-fns';
-import { PayoneerReport } from '@/parser/payoneer/payoneer-report';
+import { PayoneerReport } from '@/parser/payoneer';
 import dynamic from 'next/dynamic';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
-
 
 export interface StatisticsChartProps {
   report: PayoneerReport;

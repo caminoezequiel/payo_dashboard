@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { InputFile } from '@/widgets';
-import { Spinner, Typography } from '@/components';
+import { Spinner, Typography } from '@/ui-kit';
 
 export function Uploader({ id, accept, onFileLoad }: any) {
   const [file, setFile] = useState<any>();
