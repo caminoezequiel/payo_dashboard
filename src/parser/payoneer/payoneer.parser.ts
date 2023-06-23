@@ -1,5 +1,5 @@
 import { parse } from 'date-fns';
-import { DateRange, PayoneerReport, PayoneerReportItem } from '@/parser/payoneer/payoneer-report';
+import { DateRange, PayoneerReport, ReportItem } from '@/parser/payoneer/payoneer-report';
 import { PayoneerSanitizer } from '@/parser/payoneer/payoneer.sanitizer';
 
 export class PayoneerParser {
@@ -23,7 +23,7 @@ export class PayoneerParser {
     return new PayoneerReport(fieldNames, new DateRange(items[0].date, items[items.length - 1].date), items);
   }
 
-  private createReportItem(item: string[]): PayoneerReportItem {
+  private createReportItem(item: string[]): ReportItem {
     return {
       date: parse(item[0], 'dd-MMM-yyyy', new Date()),
       description: item[1],

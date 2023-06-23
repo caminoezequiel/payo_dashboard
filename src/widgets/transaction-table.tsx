@@ -1,10 +1,10 @@
-import { PayoneerReportItem } from '@/parser/payoneer';
+import { ReportItem } from '@/parser/payoneer';
 import { Chip, Typography } from '@/ui-kit';
 import { format } from 'date-fns';
 
 export interface TransactionTableProps {
   columns: string[],
-  items: PayoneerReportItem[]
+  items: ReportItem[]
 }
 
 export function TransactionTable({ columns, items }: TransactionTableProps) {

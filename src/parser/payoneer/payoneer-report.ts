@@ -1,8 +1,5 @@
 'use client';
 
-import { fi } from 'date-fns/locale';
-import { offset } from '@floating-ui/core';
-
 export class DateRange {
   constructor(public from: Date, public until: Date) {
   }
@@ -16,7 +13,7 @@ export interface ReportStats {
   savedRate: number;
 }
 
-export interface PayoneerReportItem {
+export interface ReportItem {
   date: Date;
   description: string;
   amount: number;
@@ -30,7 +27,7 @@ export class PayoneerReport {
   constructor(
     public readonly names: string[],
     public readonly range: DateRange,
-    public readonly items: PayoneerReportItem[],
+    public readonly items: ReportItem[],
   ) {
     const unq = new Map();
     items.forEach(i => {
@@ -47,7 +44,7 @@ export class PayoneerReport {
     return this.currencies;
   }
 
-  getItems(currency: string | null = 'USD', range: DateRange = this.range): PayoneerReportItem[] {
+  getItems(currency: string | null = 'USD', range: DateRange = this.range): ReportItem[] {
     return this.items
       .filter(i => !currency || i.currency === currency);
   }
@@ -87,7 +84,7 @@ export class PayoneerReport {
     };
   }
 
-  search(value: string, currency: string | null = 'USD'): PayoneerReportItem[] {
+  search(value: string, currency: string | null = 'USD'): ReportItem[] {
     const partial = this.getItems(currency);
     if (value?.length < 1) {
       return partial;
@@ -99,13 +96,5 @@ export class PayoneerReport {
       i.date.toISOString().toLowerCase().includes(value) ||
       i.currency.toLowerCase().includes(value)
     ));
-  }
-
-  static paginate(items: PayoneerReportItem[], page = 1, size = 10): PayoneerReportItem[] {
-    if (items.length < size) {
-      return items;
-    }
-    const offset = page > 1 ? (page - 1) * size : 0;
-    return items.slice(offset, offset + size);
   }
 }

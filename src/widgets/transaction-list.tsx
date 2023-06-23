@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from '@/ui-kit';
-import { PayoneerReport } from '@/parser/payoneer';
+import { PayoneerReport, ReportHelper } from '@/parser/payoneer';
 import { PageSizeSelector, Searcher, TransactionTable } from '@/widgets';
 
 export function TransactionList({ report }: { report: PayoneerReport }) {
@@ -23,7 +23,7 @@ export function TransactionList({ report }: { report: PayoneerReport }) {
   const changePage = (page: number) => setPage(page);
   const changeSize = (size: number) => setSize(size);
 
-  const list = PayoneerReport.paginate(items, page, size);
+  const list = ReportHelper.paginate(items, page, size);
   const pages = Math.ceil(items.length / size);
 
   return (

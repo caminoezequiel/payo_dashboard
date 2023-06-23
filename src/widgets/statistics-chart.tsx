@@ -1,9 +1,11 @@
 'use client';
-import { Card, CardBody, CardFooter, CardHeader, Typography } from '@/ui-kit';
-import { chartsConfig } from '@/configs';
-import { format } from 'date-fns';
-import { PayoneerReport } from '@/parser/payoneer';
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import type { Props as ChartProps } from 'react-apexcharts';
+import { Card, CardBody, CardHeader, Typography } from '@/ui-kit';
+import { PayoneerReport, ReportHelper } from '@/parser/payoneer';
+import { CurrencySelector } from '@/widgets';
+import { ChartBuilder } from '@/chart';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
@@ -15,42 +17,34 @@ export interface StatisticsChartProps {
 
 export function StatisticsChart({ report }: StatisticsChartProps) {
   const color = 'blue';
-  const title = 'income';
-  const description = 'income by date';
-  const footer = false;
+  const currencies = report.getCurrencies();
+  let [currency, setCurrency] = useState(currencies[0]);
 
-  const incomeData = report?.getIncomeItems()
-    ?.map(r => ({ x: format(r.date, 'MM/dd/yyyy'), y: r.amount }));
-  const spentData = report?.getSpentItems()
-    ?.map(r => ({ x: format(r.date, 'MM/dd/yyyy'), y: r.amount }));
+  const spentData = ReportHelper
+    .groupByDate(report?.getSpentItems(currency), 'month')
+    .map(r => ({
+      x: r.group,
+      y: -r.total, // convert to positive
+    }));
 
-  const charts: any[] = [incomeData, spentData].map(data => ({
-    type: 'bar',
-    height: 250,
-    series: [{
-      name: 'income',
-      data: data ?? [],
-    }],
-    options: {
-      ...chartsConfig,
-      title: {
-        show: true,
-      },
-      colors: '#fff',
-      plotOptions: {
-        bar: {
-          columnWidth: '16%',
-          borderRadius: 5,
-        },
-      },
-    },
-  }));
+  const incomeData = ReportHelper
+    .groupByDate(report?.getIncomeItems(currency), 'month')
+    .map(r => ({
+      x: r.group,
+      y: r.total,
+    }));
+
+  const charts: { title: string, chart: ChartProps }[] = [
+    { title: 'Income by day', chart: ChartBuilder.build(incomeData) },
+    { title: 'Expenses by month', chart: ChartBuilder.build(spentData) },
+  ];
 
   return (
     <div className='mt-12'>
       <Typography varient='h2' className='text-2xl font-bold' color='blue-gray'>Statistics Charts</Typography>
+      <CurrencySelector id='charts_currency_options' value={currency} items={currencies} onChange={setCurrency} />
       <div className='grid xl:grid-cols-2 gap-4 mb-10 mt-12'>
-        {charts.length && charts.map((chart, index) => (
+        {charts.map(({ title, chart }, index) => (
           <Card key={index}>
             <CardHeader variant='gradient' color={color}>
               <Chart {...chart} />
@@ -59,15 +53,7 @@ export function StatisticsChart({ report }: StatisticsChartProps) {
               <Typography variant='h6' color='blue-gray'>
                 {title}
               </Typography>
-              <Typography variant='small' className='font-normal text-blue-gray-600'>
-                {description}
-              </Typography>
             </CardBody>
-            {footer && (
-              <CardFooter className='border-t border-blue-gray-50 px-6 py-5'>
-                {footer}
-              </CardFooter>
-            )}
           </Card>
         ))}
       </div>
