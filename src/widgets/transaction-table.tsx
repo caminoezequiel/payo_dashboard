@@ -1,4 +1,4 @@
-import { ReportItem } from '@/parser/payoneer';
+import { ReportItem } from '@/report';
 import { Chip, Typography } from '@/ui-kit';
 import { format } from 'date-fns';
 

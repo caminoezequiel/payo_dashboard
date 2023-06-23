@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { StatisticsCard, StatisticsChart, Uploader } from '@/widgets';
-import { PayoneerParser, PayoneerReport } from '@/parser/payoneer';
+import { PayoneerParser, PayoneerReport } from '@/report';
 import { TransactionList } from '@/widgets/transaction-list';
 
 export default function Dashboard() {

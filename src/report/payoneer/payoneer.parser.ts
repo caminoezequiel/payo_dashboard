@@ -1,6 +1,5 @@
 import { parse } from 'date-fns';
-import { DateRange, PayoneerReport, ReportItem } from '@/parser/payoneer/payoneer-report';
-import { PayoneerSanitizer } from '@/parser/payoneer/payoneer.sanitizer';
+import { DateRange, PayoneerReport, PayoneerSanitizer, ReportItem } from '@/report/payoneer';
 
 export class PayoneerParser {
   parse(content: string): PayoneerReport {

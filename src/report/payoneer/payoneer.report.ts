@@ -1,5 +1,3 @@
-'use client';
-
 export class DateRange {
   constructor(public from: Date, public until: Date) {
   }
@@ -25,9 +23,9 @@ export class PayoneerReport {
   private currencies: string[];
 
   constructor(
-    public readonly names: string[],
-    public readonly range: DateRange,
-    public readonly items: ReportItem[],
+    private readonly names: string[],
+    private readonly range: DateRange,
+    private readonly items: ReportItem[],
   ) {
     const unq = new Map();
     items.forEach(i => {
@@ -42,6 +40,10 @@ export class PayoneerReport {
 
   getCurrencies(): string[] {
     return this.currencies;
+  }
+
+  getDateRange(): DateRange {
+    return this.range;
   }
 
   getItems(currency: string | null = 'USD', range: DateRange = this.range): ReportItem[] {

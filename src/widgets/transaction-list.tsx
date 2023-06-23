@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from '@/ui-kit';
-import { PayoneerReport, ReportHelper } from '@/parser/payoneer';
+import { PayoneerReport, ReportHelper } from '@/report';
 import { PageSizeSelector, Searcher, TransactionTable } from '@/widgets';
 
 export function TransactionList({ report }: { report: PayoneerReport }) {

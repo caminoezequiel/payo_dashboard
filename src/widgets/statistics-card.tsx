@@ -1,6 +1,6 @@
 'use client';
 import { Card, CardBody, Typography } from '@/ui-kit';
-import { PayoneerReport } from '@/parser/payoneer';
+import { PayoneerReport } from '@/report';
 import { useState } from 'react';
 import { CurrencySelector } from '@/widgets';
 

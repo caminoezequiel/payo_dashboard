@@ -3,7 +3,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { Props as ChartProps } from 'react-apexcharts';
 import { Card, CardBody, CardHeader, Typography } from '@/ui-kit';
-import { PayoneerReport, ReportHelper } from '@/parser/payoneer';
+import { GroupType, PayoneerReport, ReportHelper } from '@/report';
 import { CurrencySelector } from '@/widgets';
 import { ChartBuilder } from '@/chart';
 
@@ -21,14 +21,14 @@ export function StatisticsChart({ report }: StatisticsChartProps) {
   let [currency, setCurrency] = useState(currencies[0]);
 
   const spentData = ReportHelper
-    .groupByDate(report?.getSpentItems(currency), 'month')
+    .groupBy(report?.getSpentItems(currency), GroupType.MONTH)
     .map(r => ({
       x: r.group,
       y: -r.total, // convert to positive
     }));
 
   const incomeData = ReportHelper
-    .groupByDate(report?.getIncomeItems(currency), 'month')
+    .groupBy(report?.getIncomeItems(currency), GroupType.DAY)
     .map(r => ({
       x: r.group,
       y: r.total,
