@@ -10,7 +10,6 @@ export interface StatisticsProps {
 
 export function StatisticsCard({ report }: StatisticsProps) {
   const currencies = report.getCurrencies();
-  console.log(currencies);
   const [currency, setCurrency] = useState(currencies[0]);
   const [stats, setStats] = useState(report.getStats(currency));
   const {
@@ -48,8 +47,6 @@ export function StatisticsCard({ report }: StatisticsProps) {
     setCurrency(value);
     setStats(report.getStats(value));
   };
-
-  console.log(currency);
 
   return (
     <div className='mt-12'>
