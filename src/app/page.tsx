@@ -15,7 +15,7 @@ export default function Dashboard() {
   };
   return (
     <div>
-      <Uploader id='reportFile' accept='.csv' onFileLoad={onFileLoad} />
+      <Uploader id='reportFile' extension='csv' onFileLoad={onFileLoad} />
       {report && <StatisticsCard report={report} />}
       {report && <StatisticsChart report={report} />}
       {report && <TransactionList report={report} />}
