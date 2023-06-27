@@ -1,5 +1,5 @@
 'use client';
-import { ReportCard, StatisticsCard, StatisticsChart, Uploader } from '@/widgets';
+import { ReportCard, StatisticsCard, StatisticsChart } from '@/widgets';
 import { TransactionList } from '@/widgets/transaction-list';
 import { selectReport, useAppSelector } from '@/redux/store';
 

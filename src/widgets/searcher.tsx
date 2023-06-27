@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { Input } from '@/ui-kit';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import { CurrencySelector } from '@/widgets';
 
 export interface SearcherProps {
   onChange: (search: string) => void;

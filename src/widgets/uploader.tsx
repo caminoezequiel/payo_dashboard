@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { InputFile } from '@/widgets';
-import { Card, CardBody, Spinner, Typography } from '@/ui-kit';
+import { Spinner, Typography } from '@/ui-kit';
 import { useAppDispatch } from '@/redux/store';
 import { createReport } from '@/redux/report-slice';
 

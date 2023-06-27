@@ -1,5 +1,5 @@
 'use client';
-import { selectCurrency, selectDateRange, useAppSelector } from '@/redux/store';
+import { selectCurrency, useAppSelector } from '@/redux/store';
 import { Card, CardBody, Typography } from '@/ui-kit';
 import { PayoneerReport } from '@/report';
 
@@ -9,14 +9,13 @@ export interface StatisticsProps {
 
 export function StatisticsCard({ report }: StatisticsProps) {
   const currency = useAppSelector(selectCurrency);
-  const dateRange = useAppSelector(selectDateRange);
   const {
     income,
     spent,
     saved,
     spentRate,
     savedRate,
-  } = report.getStats(currency, dateRange);
+  } = report.getStats(currency);
 
   let cardStats = [
     {
