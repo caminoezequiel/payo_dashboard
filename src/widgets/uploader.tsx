@@ -2,8 +2,11 @@
 import { useState } from 'react';
 import { InputFile } from '@/widgets';
 import { Card, CardBody, Spinner, Typography } from '@/ui-kit';
+import { useAppDispatch } from '@/redux/store';
+import { createReport } from '@/redux/report-slice';
 
-export function Uploader({ id, extension, onFileLoad }: any) {
+export function Uploader({ id, extension }: any) {
+  const dispatch = useAppDispatch();
   const [file, setFile] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -13,7 +16,7 @@ export function Uploader({ id, extension, onFileLoad }: any) {
       setLoading(true);
       const fileReader = new FileReader();
       fileReader.onload = function(event) {
-        onFileLoad(event?.target?.result);
+        dispatch(createReport(event?.target?.result));
         setTimeout(() => setLoading(false), 500);
       };
       fileReader.readAsText(e);
@@ -22,19 +25,13 @@ export function Uploader({ id, extension, onFileLoad }: any) {
 
   return (
     <div className='flex flex-col gap-3'>
-      <Typography varient='h2' className='text-2xl font-bold' color='blue-gray'>Report File</Typography>
-      <Card>
-        <CardBody>
-          {!file && <InputFile
-            id={id}
-            extension={extension}
-            onChange={handleChange}
-          />}
-          {loading && <Spinner />}
-          {file && !loading && <Typography className='text-md' color='blue-gray'>[{file.name}]</Typography>}
-        </CardBody>
-      </Card>
-
+      {!file && <InputFile
+        id={id}
+        extension={extension}
+        onChange={handleChange}
+      />}
+      {loading && <Spinner />}
+      {file && !loading && <Typography className='text-md' color='blue-gray'>[{file.name}]</Typography>}
     </div>
   );
 }

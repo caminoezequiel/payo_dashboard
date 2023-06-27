@@ -1,21 +1,13 @@
 'use client';
-import { useState } from 'react';
-import { StatisticsCard, StatisticsChart, Uploader } from '@/widgets';
-import { PayoneerParser, PayoneerReport } from '@/report';
+import { ReportCard, StatisticsCard, StatisticsChart, Uploader } from '@/widgets';
 import { TransactionList } from '@/widgets/transaction-list';
+import { selectReport, useAppSelector } from '@/redux/store';
 
 export default function Dashboard() {
-  let [report, setReport]: [PayoneerReport | null, any] = useState(null);
-
-  const onFileLoad = (content: string) => {
-    if (content.length <= 0) {
-      return;
-    }
-    setReport((new PayoneerParser()).parse(content));
-  };
+  const report = useAppSelector(selectReport);
   return (
     <div>
-      <Uploader id='reportFile' extension='csv' onFileLoad={onFileLoad} />
+      <ReportCard report={report} />
       {report && <StatisticsCard report={report} />}
       {report && <StatisticsChart report={report} />}
       {report && <TransactionList report={report} />}

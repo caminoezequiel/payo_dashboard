@@ -1,11 +1,10 @@
 'use client';
-import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { Props as ChartProps } from 'react-apexcharts';
 import { Card, CardBody, CardHeader, Typography } from '@/ui-kit';
 import { GroupType, PayoneerReport, ReportHelper } from '@/report';
-import { CurrencySelector } from '@/widgets';
 import { ChartBuilder } from '@/chart';
+import { selectCurrency, useAppSelector } from '@/redux/store';
 
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
@@ -16,9 +15,7 @@ export interface StatisticsChartProps {
 }
 
 export function StatisticsChart({ report }: StatisticsChartProps) {
-  const color = 'blue';
-  const currencies = report.getCurrencies();
-  let [currency, setCurrency] = useState(currencies[0]);
+  let currency = useAppSelector(selectCurrency);
 
   const spentData = ReportHelper
     .groupBy(report?.getSpentItems(currency), GroupType.MONTH)
@@ -42,11 +39,10 @@ export function StatisticsChart({ report }: StatisticsChartProps) {
   return (
     <div className='mt-12'>
       <Typography varient='h2' className='text-2xl font-bold' color='blue-gray'>Statistics Charts</Typography>
-      <CurrencySelector id='charts_currency_options' value={currency} items={currencies} onChange={setCurrency} />
       <div className='grid xl:grid-cols-2 gap-4 mb-10 mt-12'>
         {charts.map(({ title, chart }, index) => (
           <Card key={index}>
-            <CardHeader variant='gradient' color={color}>
+            <CardHeader variant='gradient' color='blue'>
               <Chart {...chart} />
             </CardHeader>
             <CardBody className='p-6'>

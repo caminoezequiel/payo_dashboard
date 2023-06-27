@@ -2,22 +2,20 @@ import { useState } from 'react';
 import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from '@/ui-kit';
 import { PayoneerReport, ReportHelper } from '@/report';
 import { PageSizeSelector, Searcher, TransactionTable } from '@/widgets';
+import { selectCurrency, useAppSelector } from '@/redux/store';
 
 export function TransactionList({ report }: { report: PayoneerReport }) {
+  let currency = useAppSelector(selectCurrency);
+  console.log('currency--', currency);
   let [page, setPage] = useState(1);
   let [size, setSize] = useState(10);
-  let [items, setItems] = useState(report.getItems(null));
+  let [filter, setFilter] = useState('');
+  const items = report.search(filter, currency);
 
   const columns = report.getFields();
-  const currencies: string[] = ['ALL', ...report.getCurrencies()];
 
-  const handleSearch = (filter: string, currency: string) => {
-    const curr = currency === 'ALL' ? null : currency;
-    if (filter.length <= 1) {
-      setItems(report.getItems(curr));
-      return;
-    }
-    setItems(report.search(filter, curr));
+  const handleSearch = (value: string) => {
+    setFilter(value);
   };
 
   const changePage = (page: number) => setPage(page);
@@ -33,8 +31,8 @@ export function TransactionList({ report }: { report: PayoneerReport }) {
         <CardHeader className='flex flex-col sm:flex-row md:flex-row lg:flex-row p-2 gap-2 rounded-none'
                     floated={false}
                     shadow={false}>
-          <Searcher currencies={currencies} onChange={handleSearch} />
-          <PageSizeSelector value={size} options={[10, 25, 50]} onChange={changeSize} />
+          <Searcher onChange={handleSearch} />
+          <PageSizeSelector value={size} options={[10, 25, 50, 100]} onChange={changeSize} />
         </CardHeader>
         <CardBody>
           <TransactionTable items={list} columns={columns} />

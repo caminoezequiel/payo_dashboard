@@ -1,6 +1,7 @@
 export * from './currency-selector';
 export * from './input-file';
 export * from './page-size-selector';
+export * from './report-card';
 export * from './searcher';
 export * from './statistics-card';
 export * from './statistics-chart';
